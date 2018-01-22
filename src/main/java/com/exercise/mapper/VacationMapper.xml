@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exercise.mapper.VacationMapper">
+	<select id="listVacations" parameterType="Vacation" resultType="Vacation">
+		select * from vacation where id=#{id} and username=#{username}
+	</select>
+	<select id="listChecks" parameterType="Vacation" resultType="Vacation">
+		select * from vacation where approverid=#{approverid}
+	</select>
+	<select id="showCheck" parameterType="Vacation" resultType="Vacation">
+		select * from vacation where approverid=#{approverid} and id=#{id} 
+		and begintime=#{begintime} and overtime=#{overtime}
+	</select>
+	
+	<insert id="insertVacation" parameterType="Vacation">
+		insert into vacation(id,username,begintime,overtime,days,ispass,approverid
+		<if test="reason!=null and reason!=''">
+			,reason
+		</if>
+		) values(#{id},#{username},#{begintime},#{overtime},#{days},#{ispass},#{approverid}
+		<if test="reason!=null and reason!=''">
+			,#{reason}
+		</if>
+		)
+	</insert>
+	
+	<update id="updateCheck" parameterType="Vacation">
+		update vacation set ispass=#{ispass} where id=#{id} and begintime=#{begintime} and overtime=#{overtime} and approverid=#{approverid}
+		
+	</update>
+</mapper>
