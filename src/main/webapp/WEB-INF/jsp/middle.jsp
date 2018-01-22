@@ -38,14 +38,16 @@
 						<tr>
 							<td align="right" width="30%">性&nbsp;别：</td>
 							<td align="left">
-								<c:if test="${sessionUser.gender==0}">
+								<%-- <c:if test="${sessionUser.gender==0}">
 									<input type="text" name="gender" id="gender" value="男"
 										readonly="readonly" />
 								</c:if> 
 								<c:if test="${sessionUser.gender==1}">
 									<input type="text" name="gender" id="gender" value="女"
 										readonly="readonly" />
-								</c:if>
+								</c:if> --%>
+								<input type="text" name="gender" id="gender" readonly="readonly" 
+								value="${sessionUser.gender==0?'男':'女'}"/>
 							</td>
 						</tr>
 						<tr>

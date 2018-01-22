@@ -32,7 +32,7 @@
 								messages : {
 									username : "* 用户不能为空",
 									phone : {digits:"* 必须为数字",minlength:"* 长度不能小于11"}
-								},
+								}
 							});
 		})
 </script>
@@ -71,8 +71,8 @@
 								<td align="right" width="30%">性别：</td>
 								<td align="left">
 									<select name="gender" id="gender">
-										<option value=0>男</option>
-										<option value=1>女</option>
+										<option value="0">男</option>
+										<option value="1">女</option>
 									</select>
 								</td>
 							</tr>

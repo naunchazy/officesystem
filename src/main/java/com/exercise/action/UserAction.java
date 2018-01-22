@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exercise.pojo.po.User;
 import com.exercise.service.IUserService;
-import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/user")

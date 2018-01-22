@@ -47,8 +47,13 @@
 					考勤管理
 				</dt>
 				<dd>
-					<a href="leave.action" target="_self">休假</a>
+					<a href="${pageContext.request.contextPath }/vacation/toListVacations.do" target="_self">休假申请</a>
 				</dd>
+				<c:if test="${sessionUser.isadmin==1}">
+					<dd>
+						<a href="${pageContext.request.contextPath }/vacation/toCheckVacation.do" target="_self">休假审核</a>
+					</dd>
+				</c:if>
 			</dl>
 					
 			<dl >

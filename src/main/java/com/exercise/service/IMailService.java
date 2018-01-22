@@ -8,11 +8,16 @@ public interface IMailService {
 
 	void saveMail(Mail mail);
 
-	List<Mail> listMails(Integer id);
+	List<Mail> listMails(Mail mail);
 
 	List<Mail> listDroppedMails(Integer id);
 	
+	Mail showMail(Mail mail);
+	
 	void updateMail(Mail mail);
+
+	void deleteMail(Mail mail);
+
 
 	
 }

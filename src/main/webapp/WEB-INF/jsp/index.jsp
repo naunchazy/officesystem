@@ -15,11 +15,6 @@
 		<!-- top.jsp -->
 		<jsp:include page="top.jsp"></jsp:include>
 		
-		<!-- <form id="myForm" name="myForm" action="user/toEditUserInfo.do" method="post"> -->
-		<input type="hidden" name="u.id" value="26"/>
-		<input type="hidden" name="u.sex" value="2" id="u_sex"/>
-		<input type="hidden" name="u.supper" value="0" id="u_supper"/>
-		
 		<!-- middle.jsp -->
 		<jsp:include page="middle.jsp"></jsp:include>
 		

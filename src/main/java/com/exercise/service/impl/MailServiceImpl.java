@@ -29,10 +29,10 @@ public class MailServiceImpl implements IMailService{
 	}
 
 	@Override
-	public List<Mail> listMails(Integer id) {
+	public List<Mail> listMails(Mail mail) {
 		List<Mail> listMails=null;
 		try {
-			listMails=mMapper.listMails(id);
+			listMails=mMapper.listMails(mail);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,8 +51,22 @@ public class MailServiceImpl implements IMailService{
 	}
 
 	@Override
+	public Mail showMail(Mail mail) {
+		Mail m=null;
+		try {
+			m=mMapper.showMail(mail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return m;
+	}
+
+	
+	@Override
+	@Transactional(readOnly=false)
 	public void updateMail(Mail mail) {
 		try {
+			//System.out.println(mail.getTime()+"===="+mail.getIsdrop()+"======="+mail.getIsread());
 			mMapper.updateMail(mail);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,5 +74,15 @@ public class MailServiceImpl implements IMailService{
 		
 	}
 
+	@Override
+	@Transactional(readOnly=false)
+	public void deleteMail(Mail mail) {
+		try {
+			mMapper.deleteMail(mail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 }

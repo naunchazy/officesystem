@@ -19,13 +19,11 @@
 				  }
 			}
 		}
-		function dropMail(id,time){
-			var result = confirm("确实执行此操作？");
+		function dropMail(sendid,time){
+			var result = confirm("确实删除此邮件？");
 			if(result){
-				location.href="${pageContext.request.contextPath }/mail/dropMail?time="+time+"&sendid="+id;
+				location.href="${pageContext.request.contextPath }/mail/dropMail?time="+time+"&sendid="+sendid;
 			}
-			/* var form=document.getElementById("dropMail"+id+time);
-			form.submit(); */
 		}
 </script>
 </head>
@@ -43,7 +41,7 @@
 				<div class="t">邮件信息列表</div>
 				<div class="pages">
 					<table width="90%" border="0" cellspacing="0" cellpadding="0" 
-					style="table-layout: fixed;word-wrap:break-word;">
+					style="table-layout: fixed;">
 						<thead>
 						<tr>
 							<!-- <th>发件人</th> -->
@@ -57,11 +55,18 @@
 						<tbody id="tbody">
 						<c:forEach items="${listMails }" var="mail">
 								<tr align="center">
-									<td>${mail.title }</td>
+									<!-- 邮件标题 -->
+									<td>
+									<a  href="${pageContext.request.contextPath}/mail/toShowMail?time=${mail.time}&sendid=${mail.sendid}">
+									${mail.title }</a></td>
+									<!-- 邮件内容 -->
 									<td style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">
 									${mail.content }</td>
+									<!-- 是否已读 -->
 									<td>${mail.isread==0?"未读":"已读" }</td>
+									<!-- 时间 -->
 									<td>${mail.time }</td>
+									<!-- 操作：删除到垃圾邮箱 -->
 									<td>
 										<a href="javascript:void(0)" onclick="dropMail('${mail.sendid}','${mail.time}')">删除</a>
 										<%-- <a href="javascript:void(0)" onclick="dropMail(${mail.sendid},${mail.time})">删除</a>

@@ -13,15 +13,17 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messages_zh.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$("#updateForm").validate({
+		$("#mailForm").validate({
 							rules : {
+								/* receiveid : "required",*/ 
 								title : "required",
-								/* file : {digits:true,minlength:11} */
+								file : {/* digits:true,minlength:11 */}
 							},
 							messages : {
+								/* receiveid : "* 收件人不能为空", */
 								title : "* 标题不能为空",
-								/* file : {digits:"* 删除更换附件不能大于9M",minlength:"* 长度不能小于11"} */
-							},
+								file : {/* digits:"* 删除更换附件不能大于9M",minlength:"* 长度不能小于11" */}
+							}
 						});
 	})
 </script>
@@ -39,7 +41,8 @@
 			<div class="action">
 				<div class="t">写邮件</div>
 				<div class="pages">
-					<form id="mailForm" action="${pageContext.request.contextPath}/mail/writeMail.do">
+					<form id="mailForm" method="post" enctype="multipart/form-data"
+					action="${pageContext.request.contextPath}/mail/writeMail.do">
 						<table width="90%" border="0" cellspacing="0" cellpadding="0">
 							<tr style="display:none">
 								<td align="left"><input type="text" name="sendid" value="${sessionUser.id }"/>

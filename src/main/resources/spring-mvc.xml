@@ -27,6 +27,11 @@
     	<property name="suffix" value=".jsp"/>
     </bean>
     
+    <!-- 文件上传解析器 -->
+    <bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:defaultEncoding="UTF-8" p:maxUploadSize="9437184" p:uploadTempDir="file:/d:/part3_project/temp" />
+		
     <!-- 静态资源放行，否则就会进入action -->
 	<!-- location就是指本地工程中的静态资源的位置 -->
 	<!-- mapping就是指URL地址中的映射 -->

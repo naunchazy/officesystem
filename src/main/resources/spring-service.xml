@@ -51,7 +51,7 @@
 		    <tx:method name="delete*" propagation="REQUIRED"/>
 		    <tx:method name="update*" propagation="REQUIRED"/>
 		    <tx:method name="modify*" propagation="REQUIRED"/> 
-		    <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+		    <tx:method name="show*" propagation="SUPPORTS" read-only="true"/>
 		    <tx:method name="list*" propagation="SUPPORTS" read-only="true"/>
   		</tx:attributes>
 	</tx:advice>

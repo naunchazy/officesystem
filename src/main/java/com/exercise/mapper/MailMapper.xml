@@ -21,14 +21,35 @@
 		)
 	</insert>
 	
-	<select id="listMails" parameterType="int" resultType="Mail">
-		select * from mail where receiveid=#{receiveid} and isdrop=0
+	<select id="listMails" parameterType="Mail" resultType="Mail">
+		select * from mail where receiveid=#{receiveid} and isdrop=#{isdrop}
+		<!-- <where>
+			<if test="receiveid!=null and receiveid!=''">
+				and receiveid=#{receiveid}
+			</if>
+			<if test="isdrop!=null and isdrop!=''">
+				and isdrop=#{isdrop}
+			</if>
+		</where> -->
 	</select>
-	<select id="listDroppedMails" parameterType="int"  resultType="Mail">
+	<!-- <select id="listDroppedMails" parameterType="int"  resultType="Mail">
 		select * from mail where receiveid=#{receiveid} and isdrop=1
+	</select> -->
+	<select id="showMail" parameterType="Mail" resultType="Mail">
+		select * from mail where time=#{time} and sendid=#{sendid} and receiveid=#{receiveid}
 	</select>
 	
 	<update id="updateMail" parameterType="Mail">
-		update mail set isdrop=1 where receiveid=#{receiveid} and sendid=#{sendid} and time=#{time}
+		update mail set isdrop=#{isdrop},isread=#{isread}
+			<!-- <if test="isdrop!=null and isdrop!=''">
+				isdrop=#{isdrop},
+			</if>
+			<if test="isread!=null and isread!=''">
+				isread=#{isread},
+			</if> -->
+		where receiveid=#{receiveid} and sendid=#{sendid} and time=#{time}
 	</update>
+	<delete id="deleteMail" parameterType="Mail">
+		delete from mail where receiveid=#{receiveid} and sendid=#{sendid} and time=#{time}
+	</delete>
 </mapper>

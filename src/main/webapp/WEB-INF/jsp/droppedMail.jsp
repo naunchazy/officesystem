@@ -24,9 +24,17 @@
 			var form=document.getElementById("deleteAccount"+id);
 			form.submit();
 		}
-		function toModifyAccount(id){
-			var form=document.getElementById("toModifyAccount"+id);
-			form.submit();
+		function unDropMail(sendid,time){
+			var result=confirm("确实还原此邮件？")
+			if(result){
+				location.href="${pageContext.request.contextPath}/mail/unDropMail?sendid="+sendid+"&time="+time;
+			}
+		}
+		function deleteMail(sendid,time){
+			var result=confirm("确实永久删除此邮件？")
+			if(result){
+				location.href="${pageContext.request.contextPath}/mail/deleteMail?sendid="+sendid+"&time="+time;
+			}
 		}
 </script>
 </head>
@@ -43,7 +51,7 @@
 			<div class="action">
 				<div class="t">垃圾信息列表</div>
 				<div class="pages">
-					<table width="90%" border="0" cellspacing="0" cellpadding="0">
+					<table width="90%" border="0" cellspacing="0" cellpadding="0" style="table-layout: fixed;">
 						<thead>
 						<tr>
 							<!-- <th>发件人</th> -->
@@ -57,32 +65,25 @@
 						<tbody id="tbody">
 						<c:forEach items="${listMails }" var="mail">
 								<tr align="center">
-									<td>${mail.title }</td>
-									<td>${mail.content }</td>
+									<!-- 邮件标题 -->
+									<td><a 
+									href="${pageContext.request.contextPath}/mail/toShowMail?time=${mail.time}&sendid=${mail.sendid}">
+									${mail.title }</a></td>
+									<!-- 邮件内容 -->
+									<td style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">${mail.content }</td>
+									<!-- 是否已读 -->
 									<td>${mail.isread==0?"未读":"已读" }</td>
+									<!-- 时间 -->
 									<td>${mail.time }</td>
+									<!-- 操作:还原、删除 -->
 									<td>
-										<a href="javascript:void(0)" onclick="toModifyAccount(${user.id})">修改</a>
-										<form action="${pageContext.request.contextPath }/user/toModifyAccount/${user.id}" 
-										method="post" id="toModifyAccount${user.id}">
-											<input type="hidden" name="_method" value="PUT" />
-										</form>
-										<!-- <br style="height:1px"/> -->
-										<a href="javascript:void(0)" onclick="deleteAccount(${user.id})">删除</a>
-										<form action="${pageContext.request.contextPath }/user/deleteAccount/${user.id}" 
-										method="post" id="deleteAccount${user.id}">
-											<input type="hidden" name="_method" value="DELETE" />
-										</form>
+										<a href="javascript:void(0)" onclick="unDropMail('${mail.sendid}','${mail.time}')">还原</a>
+										<label>|</label>
+										<a href="javascript:void(0)" onclick="deleteMail('${mail.sendid}','${mail.time}')">删除</a>
 									</td>
 								</tr>
 						</c:forEach>
 						</tbody>
-						<tr>
-							<td align="left" colspan="5"><br/>
-								<input type="button"  id="save" value="添加数据" onclick="location.href='${pageContext.request.contextPath}/user/toInsertAccount.do'" />
-							</td>
-						</tr>
-
 					</table>
 				</div>
 			</div>

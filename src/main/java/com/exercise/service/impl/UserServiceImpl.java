@@ -35,19 +35,19 @@ public class UserServiceImpl implements IUserService{
 		return listUsers;
 	}
 	
-    @Transactional(readOnly=false)
 	@Override
+	@Transactional(readOnly=false)
 	public void updateUser(User user) {
 		try {
-			//System.out.println(user.getGender()+"======");
+			System.out.println(user.getGender()+"======");
 			uMapper.updateUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-    @Transactional(readOnly=false)
 	@Override
+	@Transactional(readOnly=false)
 	public void insertUser(User user) {
     	try {
 			uMapper.insertUser(user);
@@ -66,6 +66,12 @@ public class UserServiceImpl implements IUserService{
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public List<User> listAdmins(Integer id) {
+		List<User> listAdmins = uMapper.listAdmins(id);
+		return listAdmins;
 	}
 
 
