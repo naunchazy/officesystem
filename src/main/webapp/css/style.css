@@ -21,7 +21,7 @@ a:hover{ color:#f30;}
 .status{ width:100%; height:36px; background:url(../Images/Top_bg.gif) repeat-x 0 bottom; line-height:36px;}
 	.usertype{ color:#2357E7; margin-right:30px;}
 
-.main{ background:#4E93BB; height:100%; overflow:hidden; padding:14px 0;}
+.main{ background:#4E93BB; height:500px; overflow:hidden; padding:14px 0;}
 	/*菜单区域*/
 	.nav{ float:left; width:191px; padding-bottom:69px; background:url(../Images/left_bg.gif) no-repeat -382px bottom;}
 	.nav .t{ height:51px; background:url(../Images/left_bg.gif) no-repeat;}

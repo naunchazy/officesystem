@@ -5,6 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>添加账号</title>
+<style type="text/css">
+    #saveForm label.error {
+    margin-left: 2px;
+    color:red;
+    }
+</style>
 <link href="${pageContext.request.contextPath}/css/style.css"
 	rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.8.3.js"></script>
@@ -31,7 +37,8 @@
 							<tr>
 								<td align="right" width="30%">工&nbsp;号：</td>
 								<td align="left">
-									<input type="text" name="id" id="myid"/><span id="idspan"></span><b><font color="red" id="mess"></font></b>
+									<input type="text" name="id" id="myid"/><!-- <span id="idspan"></span> -->
+									<b><font color="red" id="mess"></font></b>
 								</td>
 							</tr>
 							<tr>
@@ -93,17 +100,7 @@
 
 </body>
 <script type="text/javascript">
-		/* //更改用户信息时性别信息的回显
-		window.onload=function(){
-			var gender="${sessionUser.gender}";
-			var g=document.getElementById("gender");
-			var option_g=g.getElementsByTagName("option");
-			for(var i=0;i<option_g.length;i++){
-				if(option_g[i].value==gender){
-					option_g[i].selected=true;
-				}
-			}
-		} */
+		
 		$(function() {
 			$("#saveForm").validate({
 								rules : {
@@ -111,14 +108,14 @@
 									username : "required",
 									password : "required",
 									age : {digits:true},
-									phone : {digits:true,minlength:11}
+									phone : {required:true,digits:true,minlength:11}
 								},
 								messages : {
-									id : "* 用户id不能为空",
-									username : "* 用户不能为空",
+									id : "* 工号不能为空",
+									username : "* 用户名不能为空",
 									password : "* 密码不能为空",
 									age : {digits:"* 必须为数字"},
-									phone : {digits:"* 必须为数字",minlength:"* 长度不能小于11"}
+									phone : {required:"* 电话不能为空",digits:"* 必须为数字",minlength:"* 长度不能小于11"}
 								},
 								submitHandler : function(){
 									//提交Ajax

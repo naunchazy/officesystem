@@ -6,6 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>更新用户信息</title>
+<style type="text/css">
+    #updateForm label.error {
+    margin-left: 2px;
+    color:red;
+    }
+</style>
 <link href="${pageContext.request.contextPath}/css/style.css"
 	rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.8.3.js"></script>
@@ -27,11 +33,11 @@
 			$("#updateForm").validate({
 								rules : {
 									username : "required",
-									phone : {digits:true,minlength:11}
+									phone : {required:true,digits:true,minlength:11}
 								},
 								messages : {
-									username : "* 用户不能为空",
-									phone : {digits:"* 必须为数字",minlength:"* 长度不能小于11"}
+									username : "* 用户名不能为空",
+									phone : {required:"* 电话不能为空",digits:"* 必须为数字",minlength:"* 长度不能小于11"}
 								}
 							});
 		})
@@ -71,8 +77,9 @@
 								<td align="right" width="30%">性别：</td>
 								<td align="left">
 									<select name="gender" id="gender">
-										<option value="0">男</option>
-										<option value="1">女</option>
+										<!-- <option value="">---请选择---</option> -->
+										<option value=0>男</option>
+										<option value=1>女</option>
 									</select>
 								</td>
 							</tr>

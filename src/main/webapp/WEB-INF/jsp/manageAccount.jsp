@@ -21,12 +21,15 @@
 		}
 
 		function deleteAccount(id){
-			var form=document.getElementById("deleteAccount"+id);
-			form.submit();
+			var result = confirm("确实删除该账户？");
+			if(result){
+				var form=document.getElementById("deleteAccount"+id);
+				form.submit();
+			}
 		}
 		function toModifyAccount(id){
-			var form=document.getElementById("toModifyAccount"+id);
-			form.submit();
+				var form=document.getElementById("toModifyAccount"+id);
+				form.submit();
 		}
 </script>
 </head>
@@ -62,13 +65,14 @@
 									<td>${user.address }</td>
 									<td>
 										<a href="javascript:void(0)" onclick="toModifyAccount(${user.id})">修改</a>
-										<form action="${pageContext.request.contextPath }/user/toModifyAccount/${user.id}" 
+										<form  style="display: inline" action="${pageContext.request.contextPath }/user/toModifyAccount/${user.id}" 
 										method="post" id="toModifyAccount${user.id}">
 											<input type="hidden" name="_method" value="PUT" />
 										</form>
+										<font>|</font>
 										<!-- <br style="height:1px"/> -->
 										<a href="javascript:void(0)" onclick="deleteAccount(${user.id})">删除</a>
-										<form action="${pageContext.request.contextPath }/user/deleteAccount/${user.id}" 
+										<form  style="display: inline" action="${pageContext.request.contextPath }/user/deleteAccount/${user.id}" 
 										method="post" id="deleteAccount${user.id}">
 											<input type="hidden" name="_method" value="DELETE" />
 										</form>

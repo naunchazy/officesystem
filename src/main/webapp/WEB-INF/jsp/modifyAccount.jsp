@@ -6,6 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>修改账户信息</title>
+<style type="text/css">
+    #modifyForm label.error {
+    margin-left: 2px;
+    color:red;
+    }
+</style>
 <link href="${pageContext.request.contextPath}/css/style.css"
 	rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.8.3.js"></script>
@@ -26,19 +32,17 @@
 		$(function() {
 			$("#modifyForm").validate({
 				rules : {
-					/* id : "required", */
 					username : "required",
 					password : "required",
 					age : {digits:true},
-					phone : {digits:true,minlength:11}
+					phone : {required:true,digits:true,minlength:11}
 				},
 				messages : {
-					/* id : "* 用户id不能为空", */
 					username : "* 用户不能为空",
 					password : "* 密码不能为空",
 					age : {digits:"* 必须为数字"},
-					phone : {digits:"* 必须为数字",minlength:"* 长度不能小于11"}
-				},
+					phone : {required:"* 电话不能为空",digits:"* 必须为数字",minlength:"* 长度不能小于11"}
+				}
 			});
 		})
 </script>
@@ -59,7 +63,7 @@
 					<form id="modifyForm" action="${pageContext.request.contextPath}/user/modifyAccount.do">
 						<table width="90%" border="0" cellspacing="0" cellpadding="0">
 							<tr style="display:none">
-								<td align="right" width="30%">用户id：</td>
+								<td align="right" width="30%">工号：</td>
 								<td align="left">
 									<input type="text" name="id" id="myid" 
 									value="${account.id }" />

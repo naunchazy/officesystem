@@ -19,24 +19,24 @@
 	
 	<update id="updateUser" parameterType="User">
 		update user set username=#{username}
-			<if test="password!=null and password!=''">
-				,password=#{password}
-			</if>
-			<if test="age!=null and age!=''">
-				,age=#{age}
-			</if>
-			<if test="phone!=null and phone!=''">
-				,phone=#{phone}
-			</if>
-			<if test="gender!=null and gender!=''">
-				,gender=#{gender}
-			</if>
-			<if test="address!=null and address!=''">
-				,address=#{address}
-			</if>
+		<if test="password!=null and password!=''">
+			,password=#{password}
+		</if>
+		<if test="phone!=null and phone!=''">
+			,phone=#{phone}
+		</if>
+		<if test="age!=null and age!=''">
+			,age=#{age}
+		</if>
+		<if test="gender!=null">
+			,gender=#{gender}
+		</if>
+		<if test="address!=null and address!=''">
+			,address=#{address}
+		</if>
 		where id=#{id}
-		<!-- update user set username=#{username},gender=#{gender} where id=#{id} -->
 	</update>
+	
 	
 	<insert id="insertUser" parameterType="User">
 		<!-- insert into user(id,username,password,phone,isadmin, -->

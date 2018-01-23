@@ -69,6 +69,10 @@
 		margin: 18px auto 0;
 		background: url(${pageContext.request.contextPath}/Images/copyright.gif) no-repeat center 0;
 	}
+    #userForm label.error {
+    margin-left: 2px;
+    color:red;
+    }
 </style>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.8.3.js"></script>
@@ -81,12 +85,12 @@
 	<div class="login-area">
 		<form id="userForm">
 			<label>
-				工&nbsp;&nbsp;号：
+				工&nbsp;号:
 			</label>
 			<input type="text" name="id" />
 			<br>
 			<label>
-				密&nbsp;&nbsp;码：
+				密&nbsp;码:
 			</label>
 			
 			<input type="password" name="password" />
@@ -108,16 +112,16 @@ $(function() {
 							password : "required"
 						},
 						messages : {
-							id : {digits:"工号为数字",required:"工号不能为空"},
-							password : "密码不能为空"
+							id : {digits:"*工号为数字",required:"*工号不能为空"},
+							password : "*密码不能为空"
 						},
 						submitHandler : function() {
 							//提交Ajax
 							 $.ajax({
-										data : $("#userForm").serialize(),
-										dataType : "text",
+										data : $("#userForm").serialize(),//序列化表单，表单所有的数据都会提交到后台
+										dataType : "text",//用post方法传数据
 										type : "post",
-										url : "${pageContext.request.contextPath}/user/login.do",
+										url : "${pageContext.request.contextPath}/user/login.do",//表单传递到哪
 										success : function(rec) {
 											if(rec=="0"){
 												$("#mess").html("* 工号或密码错误");

@@ -52,7 +52,7 @@
 						</tr>
 						<tr>
 							<td align="right" width="30%">手&nbsp;机：</td>
-							<td align="left"><input type="text" name="u.mobile"
+							<td align="left"><input type="text" name="phone"
 								value="${sessionUser.phone}" readonly="readonly"/>
 							</td>
 						</tr>
