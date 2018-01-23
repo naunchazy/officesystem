@@ -66,7 +66,6 @@
 								</c:if>
 							</tr>
 							<tr>
-								<%-- <td align="center" colspan="2"><br/><input type="button"  id="save" value="编辑数据" onclick="setit(${sessionUser.id})" /></td> --%>
 								<td align="center" colspan="2"><br />
 									<c:if test="${mail.isdrop==0 }">
 										<input type="button" value="返回" onclick="location.href='${pageContext.request.contextPath}/mail/toReceivedMail.do'"/>
