@@ -12,10 +12,12 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.validate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messages_zh.js"></script>
 <script>
+	//审核通过
 	function submit1(){
 		document.getElementById("checkForm").action = "${pageContext.request.contextPath}/vacation/checkOneYes";
 	    document.getElementById("checkForm").submit();
 	}
+	//审核不通过
 	function submit2(){
 		document.getElementById("checkForm").action = "${pageContext.request.contextPath}/vacation/checkOneNo";
 	    document.getElementById("checkForm").submit();
@@ -79,7 +81,8 @@
 							<tr>
 								<td align="center" colspan="2"><br />
 									<input type="button" onclick="submit1()" value="审核通过">&nbsp;&nbsp;
-									<input type="button" onclick="submit2()" value="审核不通过">
+									<input type="button" onclick="submit2()" value="审核不通过">&nbsp;&nbsp;
+									<input type="button" onclick="location.href='${pageContext.request.contextPath}/vacation/toCheckVacation.do'" value="返&nbsp;&nbsp;回">
 								</td>
 							</tr>
 						</table>

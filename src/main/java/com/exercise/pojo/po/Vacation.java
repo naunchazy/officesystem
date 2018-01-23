@@ -1,13 +1,9 @@
 package com.exercise.pojo.po;
 
-import java.util.Date;
-
 public class Vacation {
 
 	private Integer id;
 	private String username;
-//	private Date begintime;
-//	private Date overtime;
 	private String begintime;
 	private String overtime;
 	private Integer days;

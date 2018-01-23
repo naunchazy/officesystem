@@ -6,44 +6,58 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>申请休假</title>
+<style type="text/css">
+    #vacationForm label.error {
+    margin-left: 2px;
+    color:red;
+    }
+</style>
 <link href="${pageContext.request.contextPath}/css/style.css"
 	rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.validate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messages_zh.js"></script>
 <script type="text/javascript">
-	/* window.onload=function(){
-		var a=$("#begintime").attr("value");
-		alert(typeof(a));
-	} */
 	function countDays(){
+		var nowtimeS=new Date().toLocaleDateString();/* 获得当前日期字符串 */
+		var todaytime=Date.parse(nowtimeS);/* 将当前日期字符串转为毫秒数 */
 		var begintimeS=document.getElementById("begintime");
 		var overtimeS=document.getElementById("overtime");
-		var days=document.getElementById("days");
-		var begintime=Date.parse(begintimeS.value);
+		var begintime=Date.parse(begintimeS.value);//得到的begintimeS.value为String类型的，Date.parse能转化为毫秒数
 		var overtime=Date.parse(overtimeS.value);
-		var time=Math.abs(begintime-overtime)/(1000*60*60*24);
-		if(isNaN(time)){
-			days.value=0;
+		var days=document.getElementById("days");
+		var begintip=document.getElementById("begintip");
+		var overtip=document.getElementById("overtip");
+		if(begintime>=todaytime){
+			begintip.innerHTML="";
+			if(begintime<=overtime){
+				overtip.innerHTML="";
+				var time=1+Math.abs(begintime-overtime)/(1000*60*60*24);
+				days.value=time;
+			}else if(begintime>overtime){
+				overtip.innerHTML="* 结束日期早于开始日期";
+				days.value='';
+			}
 		}else{
-			days.value=time;
+			overtip.innerHTML="";
+			begintip.innerHTML="* 日期已过期";
+			days.value='';
 		}
+		
 	}
 	$(function() {
 		$("#vacationForm").validate({
 							rules : {
 								begintime : "required",
 								overtime : "required",
-								days : "",
-								approverid : "required",
-								file : {/* digits:true,minlength:11 */}
+								days:"required",
+								approverid : "required"
 							},
 							messages : {
 								begintime : "* 开始时间不能为空",
 								overtime : "* 结束时间不能为空",
-								days : "",
-								approverid : "* 请选择审批人",
-								file : {/* digits:"* 删除更换附件不能大于9M",minlength:"* 长度不能小于11" */}
+								days:"",//时间无效时，逻辑控制请假天数也不能计算出来，由逻辑控制中给出相应提示。同时这边不让表单提交
+								approverid : "* 请选择审批人"
 							}
 						});
 	})
@@ -78,12 +92,15 @@
 							<tr>
 								<td align="right" width="30%">开始时间：</td>
 								<td align="left"><input type="date" onchange="countDays()"
-								id="begintime" name="begintime"/></td>
+								id="begintime" name="begintime"/>
+								<span id="begintip" style="color:red"></span>
+								</td>
 							</tr>
 							<tr>
 								<td align="right" width="30%">结束时间：</td>
 								<td align="left"><input type="date" onchange="countDays()"
-								id="overtime" name="overtime"/></td>
+								id="overtime" name="overtime"/><span id="overtip" style="color:red"></span>
+								</td>
 							</tr>
 							<tr>
 								<td align="right" width="30%">请假天数：</td>
@@ -109,7 +126,6 @@
 								</td>
 							</tr>
 							<tr>
-								<%-- <td align="center" colspan="2"><br/><input type="button"  id="save" value="编辑数据" onclick="setit(${sessionUser.id})" /></td> --%>
 								<td align="center" colspan="2"><br />
 									<input type="submit" value="提交申请" />&nbsp;&nbsp;
 									<input type="button" value="返&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;回"
