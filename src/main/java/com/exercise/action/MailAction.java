@@ -53,12 +53,6 @@ public class MailAction {
 	@RequestMapping("/writeMail.do")
 	public String writeMail(@RequestParam("file") MultipartFile file,Integer sendid,Integer receiveid,String title,String content){
 		
-		/*//System.out.println(mail.getSendid()+","+mail.getReceiveid()+","+mail.getTitle()+","+mail.getContent()+","+mail.getFile());
-		System.out.println(mail.getReceiveid());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		String time = sdf.format(new Date());
-		mail.setTime(time);*/
-		
 		Mail mail = new Mail();
 		mail.setSendid(sendid);
 		mail.setReceiveid(receiveid);
@@ -72,7 +66,7 @@ public class MailAction {
 		if(!file.isEmpty()){
 			try {
 				// 文件保存路径  
-                String filePath = "d:/part3_project/temp/"+file.getOriginalFilename();  
+                String filePath = "d:/part3_project/temp/"+receiveid+"-"+file.getOriginalFilename();  
                 // 转存文件  
                 file.transferTo(new File(filePath));
         		mail.setFile(filePath);
@@ -81,6 +75,7 @@ public class MailAction {
 			}
 		}
 		mailService.saveMail(mail);
+		/*model.addAttribute("message", "邮件发送成功");*/
 		return "redirect:toWriteMail.do";
 	}
 	/*到收邮件的页面*/
@@ -103,7 +98,7 @@ public class MailAction {
 		Integer receiveid=sessionUser.getId();
 		String sendidStr = request.getParameter("sendid");
 		Integer sendid=Integer.parseInt(sendidStr);
-		//还需根据发送人的id，得到他的名字
+		//根据发送人的id，得到他的名字.显示在邮件详情页上
 		User user = uService.selectById(sendid);
 		request.setAttribute("senderName", user.getUsername());
 		String time = request.getParameter("time");
@@ -114,8 +109,8 @@ public class MailAction {
 		mailcon.setIsread(1);
 		Mail mail = mailService.showMail(mailcon);
 		Integer isdrop=mailService.showMail(mail).getIsdrop();//
-		mail.setIsdrop(isdrop);//
-		mailService.updateMail(mail);
+		mailcon.setIsdrop(isdrop);//
+		mailService.updateMail(mailcon);
 		//System.out.println(mail.getSendid()+","+mail.getReceiveid()+","+mail.getTitle()+","+mail.getContent()+",");
 		request.setAttribute("mail", mail);
 		return "showMail";
@@ -137,15 +132,6 @@ public class MailAction {
 	    return entity;
 	}
 	
-	/*删除邮件到垃圾箱*/
-	/*@RequestMapping(value="/dropMail/{sendid}/{time}")
-	public String dropMail(@PathVariable("sendid")Integer sendid,@PathVariable("time")String time,HttpSession session){
-		User sessionUser = (User) session.getAttribute("sessionUser");
-		Integer receiveid=sessionUser.getId();
-		System.out.println(sendid+",,,,,"+time);
-		mailService.updateMail(receiveid,sendid,time);
-		return "redirect:toReceivedMail.do";
-	}*/
 	/*删除邮件到垃圾箱*/
 	@RequestMapping(value="/dropMail")
 	public String dropMail(HttpServletRequest request,HttpSession session){
