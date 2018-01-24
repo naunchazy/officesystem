@@ -21,7 +21,16 @@ public class TestUserMapper {
 	public void test(){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		String time = sdf.format(new Date());
-		System.out.println(time);;
+		System.out.println(time);
+	}
+	@Test
+	public void test2(){
+		String file = "d:/part3_project/temp/Day4作业.txt@d:/part3_project/temp/额外作业.txt@";
+		String[] filenames = file.split("[@]");
+		System.out.println(filenames.length);
+		for (String filename : filenames) {
+			System.out.println(filename);
+		}
 	}
 	/*IUserService ser;
 	
