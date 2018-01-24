@@ -18,19 +18,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.validate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messages_zh.js"></script>
 <script type="text/javascript">
-/* function confirmsend()
-{
-    var result=confirm("确定发送？");
-    if(result){
-    	document.forms[0].submit(); 
-    	alert("邮件发送成功！");
-    }
-} */
-/* window.onload=function(){
-	if("${message}"!=null){
-		alert("${message}");
-	}
-} */
 $(function() {
 		$("#mailForm").validate({
 							rules : {
@@ -40,6 +27,10 @@ $(function() {
 							messages : {
 								receiveid : "* 收件人不能为空",
 								title : "* 标题不能为空"
+							},
+							submitHandler : function() {
+								alert("邮件发送成功!");//提示邮件发送成功
+								form.submit();
 							}
 						});
 		var max_size = 9437184;
@@ -49,7 +40,6 @@ $(function() {
 			var output = [];
 			for (var i = 0, f; f = files[i]; i++) {
 				if (f.size > max_size) {
-					/* alert("上传文件不能超过9M"); */
 					$("#filetip").html("* 上传文件不能超过9M");
 					$(this).val('');
 				}else{
@@ -110,9 +100,8 @@ $(function() {
 								</td>
 							</tr>
 							<tr>
-								<%-- <td align="center" colspan="2"><br/><input type="button"  id="save" value="编辑数据" onclick="setit(${sessionUser.id})" /></td> --%>
 								<td align="center" colspan="2"><br />
-									<input type="submit" value="发送邮件"/>
+									<input type="submit" value="发送邮件" />
 								</td>
 							</tr>
 

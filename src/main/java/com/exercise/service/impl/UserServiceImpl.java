@@ -39,7 +39,6 @@ public class UserServiceImpl implements IUserService{
 	@Transactional(readOnly=false)
 	public void updateUser(User user) {
 		try {
-			System.out.println(user.getGender()+"======");
 			uMapper.updateUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -11,7 +11,17 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.validate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/messages_zh.js"></script>
-
+<script type="text/javascript">
+	function downloadfiles(file){
+		var filenames = file.split("@");
+		for(var i=0;i<filenames.length-1;i++){
+			var filename=filenames[i];
+			var path="${pageContext.request.contextPath}/mail/toDownload.do?file="+filename;
+			window.open(path);
+			//location.href="${pageContext.request.contextPath}/mail/toDownload.do?file="+filename;
+		}
+	}
+</script>
 </head>
 <body>
 	<!-- top.jsp -->
@@ -53,10 +63,18 @@
 								</td>
 							</tr>
 							<tr>
-								<td align="right" width="30%">文&nbsp;件：</td>
+								<td align="right" width="30%">附件下载：</td>
 								<c:if test="${!empty mail.file}">
-									<td align="left">
+									<%-- <td align="left">
 										<a href="${pageContext.request.contextPath}/mail/toDownload.do?file=${mail.file}">下载</a>
+									</td> --%>
+									<td align="left">
+										<!-- <a href="javascript:void(0)" onclick="">全部下载</a> -->
+										<input type="button" onclick="downloadfiles('${mail.file}')" value="全部下载">&nbsp;&nbsp;
+										选择下载：
+										<c:forEach items="${filenames}" var="filename" varStatus="vs">
+											${vs.count}:<a href="${pageContext.request.contextPath}/mail/toDownload.do?file=${filename}">${filename}</a>&nbsp;
+										</c:forEach>
 									</td>
 								</c:if>
 								<c:if test="${empty mail.file}">
