@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -48,34 +49,40 @@ public class MailAction {
 		return "writeMail";
 	}
 	/*
-	 * 提交邮件及上传文件
+	 * 提交邮件及上传文件【多文件的上传】
 	 */
 	@RequestMapping("/writeMail.do")
-	public String writeMail(@RequestParam("file") MultipartFile file,Integer sendid,Integer receiveid,String title,String content){
-		
+	public String writeMail(@RequestParam("file") MultipartFile[] file, Integer sendid, Integer receiveid, String title,
+			String content) {
 		Mail mail = new Mail();
 		mail.setSendid(sendid);
 		mail.setReceiveid(receiveid);
 		mail.setTitle(title);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String time = sdf.format(new Date());
 		mail.setTime(time);
 		mail.setContent(content);
-		
+		/* 多文件的上传 */
 		// 判断文件是否为空
-		if(!file.isEmpty()){
+		if (file.length != 0) {
 			try {
-				// 文件保存路径  
-                String filePath = "d:/part3_project/temp/"+receiveid+"-"+file.getOriginalFilename();  
-                // 转存文件  
-                file.transferTo(new File(filePath));
-        		mail.setFile(filePath);
-			} catch (IllegalStateException | IOException e) {
+				// 文件保存路径
+				List<MultipartFile> filenames = Arrays.asList(file);
+				String filePath1 = "";
+				for (MultipartFile filename : filenames) {
+					String filePath = "d:/part3_project/temp/" + filename.getOriginalFilename();
+					// 上传的文件放到哪个路径下
+					filename.transferTo(new File(filePath));
+					// 将多个文件名拼接【拼接的文件名不包含路径。只需文件名，下载时将路径加上即可下载相应文件】
+					filePath1 = filePath1 + filename.getOriginalFilename() + "@";
+				}
+				// 存储到数据库中
+				mail.setFile(filePath1);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		mailService.saveMail(mail);
-		/*model.addAttribute("message", "邮件发送成功");*/
 		return "redirect:toWriteMail.do";
 	}
 	/*到收邮件的页面*/
@@ -106,21 +113,25 @@ public class MailAction {
 		mailcon.setSendid(sendid);
 		mailcon.setReceiveid(receiveid);
 		mailcon.setTime(time);
-		mailcon.setIsread(1);
 		Mail mail = mailService.showMail(mailcon);
+		mailcon.setIsread(1);
 		Integer isdrop=mailService.showMail(mail).getIsdrop();//
 		mailcon.setIsdrop(isdrop);//
 		mailService.updateMail(mailcon);
-		//System.out.println(mail.getSendid()+","+mail.getReceiveid()+","+mail.getTitle()+","+mail.getContent()+",");
+		//将多文件的路径分割后放在数组中，再放到域对象request中，传到前端页面showMail.jsp。显示出来。可实现多个文件的逐一下载
+		String file = mailService.showMail(mailcon).getFile();
+		if(file!=null){
+			String[] filenames = file.split("[@]");
+			request.setAttribute("filenames", filenames);
+		}
 		request.setAttribute("mail", mail);
 		return "showMail";
 	}
 	/*文件下载*/
 	@RequestMapping("/toDownload.do")
 	public ResponseEntity<byte[]> download(HttpServletRequest request) throws IOException {
-	    String filename = request.getParameter("file");
-	    System.out.println(filename);
-		File file = new File(filename);
+		String filename = request.getParameter("file");
+		File file = new File("d:/part3_project/temp/"+filename);
 	    byte[] body = null;
 	    InputStream is = new FileInputStream(file);
 	    body = new byte[is.available()];
@@ -181,6 +192,7 @@ public class MailAction {
 		mailService.updateMail(mail);
 		return "redirect:todroppedMail.do";
 	}
+	/*永久删除邮件*/
 	@RequestMapping("/deleteMail")
 	public String deleteMail(HttpServletRequest request,HttpSession session){
 		User sessionUser = (User) session.getAttribute("sessionUser");
