@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+    	http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+    	http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        ">
+     
+    <!-- 扫描controller-->
+    <context:component-scan base-package="com.exercise.action"/>
+    <!-- Controller层注解@ResponseBody和@RequestMapping需要 -->
+    <mvc:annotation-driven />
+    
+    <!-- 视图解析器 -->
+    <bean id="viewResolver" name="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    	<property name="prefix" value="/WEB-INF/jsp/"/><!--注意要加/,不然前缀会和组合的部分直接连接在一起-->
+    	<property name="suffix" value=".jsp"/>
+    </bean>
+    
+    <!-- 文件上传解析器 -->
+    <bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:defaultEncoding="UTF-8" p:maxUploadSize="9437184" p:uploadTempDir="file:/d:/part3_project/temp" />
+		
+    <!-- 静态资源放行，否则就会进入action -->
+	<!-- location就是指本地工程中的静态资源的位置 -->
+	<!-- mapping就是指URL地址中的映射 -->
+	<mvc:resources location="/js/" mapping="/js/**"/>
+	<mvc:resources location="/Images/" mapping="/Images/**"/>
+	<mvc:resources location="/imgs/" mapping="/imgs/**"/>	
+	<mvc:resources location="/css/" mapping="/css/**"/>	
+</beans>
