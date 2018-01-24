@@ -58,10 +58,13 @@
 								overtime : "* 结束时间不能为空",
 								days:"",//时间无效时，逻辑控制请假天数也不能计算出来，由逻辑控制中给出相应提示。同时这边不让表单提交
 								approverid : "* 请选择审批人"
+							},
+							submitHandler : function() {
+								alert("休假申请成功!");//提示休假申请成功
+								form.submit();
 							}
 						});
 	})
-	
 </script>
 </head>
 <body>
@@ -127,7 +130,7 @@
 							</tr>
 							<tr>
 								<td align="center" colspan="2"><br />
-									<input type="submit" value="提交申请" />&nbsp;&nbsp;
+									<input type="submit" value="提交申请"/>&nbsp;&nbsp;
 									<input type="button" value="返&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;回"
 									onclick="location.href='${pageContext.request.contextPath}/vacation/toListVacations.do'">
 								</td>
