@@ -93,11 +93,11 @@
 				密&nbsp;码:
 			</label>
 			
-			<input type="password" name="password" />
+			<input type="password" name="password" /><b><font color="red" id="mess"></font></b>
 			
 			<input type="submit" class="login-sub" value="" />
 			<br/>
-				<b><font color="red" id="mess"></font></b>
+				<!-- <b><font color="red" id="mess"></font></b> -->
 		</form>
 	</div>
 	<div class="login-copyright"></div>
@@ -117,7 +117,7 @@ $(function() {
 						},
 						submitHandler : function() {
 							//提交Ajax
-							 $.ajax({
+							$.ajax({
 										data : $("#userForm").serialize(),//序列化表单，表单所有的数据都会提交到后台
 										dataType : "text",//用post方法传数据
 										type : "post",
