@@ -37,20 +37,20 @@
 							<tr>
 								<td align="right" width="30%">工&nbsp;号：</td>
 								<td align="left">
-									<input type="text" name="id" id="myid"/><!-- <span id="idspan"></span> -->
-									<b><font color="red" id="mess"></font></b>
+									<input type="text" name="id" id="myid"/>
+									<b><font color="red" id="mess"></font></b><font color="red"> *</font>
 								</td>
 							</tr>
 							<tr>
 								<td align="right" width="30%">用户名：</td>
 								<td align="left">
-									<input type="text" name="username"/>
+									<input type="text" name="username"/><font color="red"> *</font>
 								</td>
 							</tr>
 							<tr>
 								<td align="right" width="30%">密&nbsp;码：</td>
 								<td align="left">
-									<input type="password" name="password"/>
+									<input type="password" name="password"/><font color="red"> *</font>
 								</td>
 							</tr>
 							<tr>
@@ -72,7 +72,7 @@
 							<tr>
 								<td align="right" width="30%">手&nbsp;机：</td>
 								<td align="left">
-									<input type="text" name="phone"/>
+									<input type="text" name="phone"/><font color="red"> *</font>
 								</td>
 							</tr>
 							<tr>
@@ -111,11 +111,11 @@
 									phone : {required:true,digits:true,minlength:11}
 								},
 								messages : {
-									id : "* 工号不能为空",
-									username : "* 用户名不能为空",
-									password : "* 密码不能为空",
-									age : {digits:"* 必须为数字"},
-									phone : {required:"* 电话不能为空",digits:"* 必须为数字",minlength:"* 长度不能小于11"}
+									id : " * 工号不能为空",
+									username : " * 用户名不能为空",
+									password : " * 密码不能为空",
+									age : {digits:" * 必须为数字"},
+									phone : {required:" * 电话不能为空",digits:" * 必须为数字",minlength:" * 长度不能小于11"}
 								},
 								submitHandler : function(){
 									//提交Ajax
@@ -126,8 +126,9 @@
 												url : "${pageContext.request.contextPath}/user/insertAccount.do",
 												success : function(rec) {
 													if(rec=="1"){
-														$("#mess").html("* id已被使用");
+														$("#mess").html(" * id已被使用");
 													}else{
+														alert("添加用户成功！");
 														location.href = "${pageContext.request.contextPath}/user/toManageAccount.do"
 													}	
 												}

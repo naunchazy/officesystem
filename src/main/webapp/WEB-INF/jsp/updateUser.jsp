@@ -36,8 +36,12 @@
 									phone : {required:true,digits:true,minlength:11}
 								},
 								messages : {
-									username : "* 用户名不能为空",
-									phone : {required:"* 电话不能为空",digits:"* 必须为数字",minlength:"* 长度不能小于11"}
+									username : " * 用户名不能为空",
+									phone : {required:" * 电话不能为空",digits:" * 必须为数字",minlength:" * 长度不能小于11"}
+								},
+								submitHandler : function() {
+									alert("数据更新成功!");//提示休假申请成功
+									form.submit();
 								}
 							});
 		})
@@ -65,7 +69,7 @@
 									<input type="hidden" name="id"
 									value="${sessionUser.id}" />
 									<input type="text" name="username"
-									value="${sessionUser.username}" />
+									value="${sessionUser.username}" /><font color="red"> *</font>
 								</td>
 							</tr>
 							<tr>
@@ -87,7 +91,7 @@
 								<td align="right" width="30%">手机：</td>
 								<td align="left">
 									<input type="text" name="phone" id="phone"
-									value="${sessionUser.phone}" />
+									value="${sessionUser.phone}" /><font color="red"> *</font>
 								</td>
 							</tr>
 							<tr>

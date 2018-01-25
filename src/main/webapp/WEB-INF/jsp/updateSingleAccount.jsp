@@ -36,10 +36,14 @@
 									repeatpwd: {equalTo:$("input[name='password']")}
 								},
 								messages : {
-									username : "* 用户不能为空",
-									password : "* 密码不能为空",/* required:true,required:"* 确认密码不能为空", */
-									repeatpwd: {equalTo:"* 两次密码不一致"}
+									username : " * 用户不能为空",
+									password : " * 密码不能为空",/* required:true,required:"* 确认密码不能为空", */
+									repeatpwd: {equalTo:" * 两次密码不一致"}
 								},
+								submitHandler : function() {
+									alert("数据更新成功!"); //提示
+									form.submit();
+								}
 							});
 		})
 </script>
@@ -65,16 +69,18 @@
 									<input type="hidden" name="id"
 									value="${sessionUser.id}" />
 									<input type="text" name="username"
-									value="${sessionUser.username}" />
+									value="${sessionUser.username}" /><font color="red"> *</font>
 								</td>
 							</tr>
 							<tr>
 								<td align="right" width="30%">密&nbsp;&nbsp;码：</td>
-								<td align="left"><input type="password" name="password"/></td>
+								<td align="left"><input type="password" name="password"/><font color="red"> *</font>
+								</td>
 							</tr>
 							<tr>
 								<td align="right" width="30%">确认密码：</td>
-								<td align="left"><input type="password" name="repeatpwd"/></td>
+								<td align="left"><input type="password" name="repeatpwd"/><font color="red"> *</font>
+								</td>
 							</tr>
 							<tr>
 								<%-- <td align="center" colspan="2"><br/><input type="button"  id="save" value="编辑数据" onclick="setit(${sessionUser.id})" /></td> --%>

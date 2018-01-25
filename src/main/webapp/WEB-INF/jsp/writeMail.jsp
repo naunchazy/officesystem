@@ -78,13 +78,14 @@ $(function() {
 										<c:forEach items="${listUsers }" var="user">
 											<option value="${user.id }">${user.username }</option>
 										</c:forEach>
-									</select>
-									<font id="receivetip" color="red"></font>
+									</select><font color="red"> *</font>
 								</td>
 							</tr>
 							<tr>
 								<td align="right" width="30%">邮件标题：</td>
-								<td align="left"><input type="text" name="title"/></td>
+								<td align="left"><input type="text" name="title"/>
+								<font color="red"> *</font>
+								</td>
 							</tr>
 							<tr>
 								<td align="right" width="30%">邮件内容：</td>
