@@ -75,11 +75,8 @@ public class UserAction {
 	 */
 	@RequestMapping("/updateUser.do")
 	public String updateUser(User user,HttpSession session){
-		System.out.println(user.getGender()+",,,,,,");
 		userService.updateUser(user);
-		System.out.println(user.getGender()+"``````");
 		User findUser = userService.selectById(user.getId());
-		System.out.println(findUser.getGender()+"/////");
 		session.setAttribute("sessionUser", findUser);
 		return "redirect:toindex.do";
 	}
@@ -115,8 +112,8 @@ public class UserAction {
 	public String toInsertAccount(){
 		return "insertAccount";
 	}
-	/*保存新增的账户*/
-	@RequestMapping(value="/insertAccount.do",produces="plain/text;charset=UTF-8")//,method=RequestMethod.POST
+	/*保存新增的账户。点击保存数据按钮才开始验证工号*/
+	/*@RequestMapping(value="/insertAccount.do",produces="plain/text;charset=UTF-8")
 	@ResponseBody
 	public String insertAccount(User user){
 		User findUser = userService.selectById(user.getId());
@@ -126,20 +123,32 @@ public class UserAction {
 		}else{
 			return "1";
 		}
-	}
-	/*@RequestMapping("/checkId.do")
-	@ResponseBody
-	public String checkId(HttpServletRequest request){
-		String idStr=request.getParameter("id");
-		Integer id=Integer.parseInt(idStr);
-		System.out.println(id+",,,,,");
-		User user = userService.selectById(id);
-		System.err.println(user.getId());
-		Gson gson = new Gson();
-		String json = gson.toJson(user);
-		System.out.println(json);
-		return json;
 	}*/
+	@RequestMapping(value="/insertAccount.do")
+	public String insertAccount(User user){
+		User findUser = userService.selectById(user.getId());
+		if(findUser==null){
+			userService.insertUser(user);
+			return "redirect:toManageAccount.do";
+		}else{
+			return "insertAccount";
+		}
+	}
+	@RequestMapping(value="/checkId.do",produces="plain/text;charset=UTF-8")
+	@ResponseBody
+	public String checkId(User user){
+		User findUser=null;
+		if(user.getId()!=null){
+			findUser= userService.selectById(user.getId());
+			if(findUser==null){
+				return "0";
+			}else{
+				return "1";
+			}
+		}else{
+			return "2";
+		}
+	}
 	/*管理员修改账号信息前，回显账户数据*/
 	@RequestMapping(value="/toModifyAccount/{id}",method=RequestMethod.PUT)
 	public String toModifyAccount(@PathVariable("id") Integer id,Model model){
