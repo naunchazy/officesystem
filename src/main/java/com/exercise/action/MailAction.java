@@ -97,7 +97,18 @@ public class MailAction {
 		/*session.setAttribute("listMails", listMails);*/
 		return "receivedMail";
 	}
-	
+	/*到发件箱的页面*/
+	@RequestMapping("/toSendedMail.do")
+	public String toSendedMail(HttpSession session,Model model){
+		User sessionUser = (User) session.getAttribute("sessionUser");
+		Mail mail=new Mail();
+		mail.setSendid(sessionUser.getId());
+		//mail.setIsdrop(0);
+		List<Mail> listSendMails=mailService.listSendMails(mail);
+		model.addAttribute("listSendMails", listSendMails);
+		/*session.setAttribute("listMails", listMails);*/
+		return "sendedMail";
+	}
 	/*去往查看邮件具体内容页面，实现邮件信息的展示*/
 	@RequestMapping("/toShowMail")
 	public String showMail(HttpServletRequest request,HttpSession session){
@@ -126,6 +137,31 @@ public class MailAction {
 		}
 		request.setAttribute("mail", mail);
 		return "showMail";
+	}
+	/*去往查看邮件具体内容页面，实现邮件信息的展示*/
+	@RequestMapping("/toShowMail2")
+	public String showMail2(HttpServletRequest request,HttpSession session){
+		User sessionUser = (User) session.getAttribute("sessionUser");
+		Integer sendid=sessionUser.getId();
+		String receiveStr = request.getParameter("receiveid");
+		Integer receiveid=Integer.parseInt(receiveStr);
+		//根据收送人的id，得到他的名字.显示在邮件详情页上
+		User user = uService.selectById(receiveid);
+		request.setAttribute("receiveName", user.getUsername());
+		String time = request.getParameter("time");
+		Mail mailcon=new Mail();
+		mailcon.setSendid(sendid);
+		mailcon.setReceiveid(receiveid);
+		mailcon.setTime(time);
+		Mail mail = mailService.showMail(mailcon);
+		//将多文件的路径分割后放在数组中，再放到域对象request中，传到前端页面showMail.jsp。显示出来。可实现多个文件的逐一下载
+		String file = mailService.showMail(mailcon).getFile();
+		if(file!=null){
+			String[] filenames = file.split("[@]");
+			request.setAttribute("filenames", filenames);
+		}
+		request.setAttribute("mail", mail);
+		return "showMail2";
 	}
 	/*文件下载*/
 	@RequestMapping("/toDownload.do")
@@ -161,6 +197,21 @@ public class MailAction {
 		mail.setIsread(isread);//
 		mailService.updateMail(mail);
 		return "redirect:toReceivedMail.do";
+	}
+	/*永久删除发件箱中自己发送的邮件*/
+	@RequestMapping(value="/dropMail2")
+	public String dropMail2(HttpServletRequest request,HttpSession session){
+		User sessionUser = (User) session.getAttribute("sessionUser");
+		Integer sendid=sessionUser.getId();
+		String receiveidStr = request.getParameter("receiveid");
+		Integer receiveid=Integer.parseInt(receiveidStr);
+		String time = request.getParameter("time");
+		Mail mail=new Mail();
+		mail.setSendid(sendid);
+		mail.setReceiveid(receiveid);
+		mail.setTime(time);
+		mailService.deleteMail(mail);
+		return "redirect:toSendedMail.do";
 	}
 	/*到垃圾邮件页面*/
 	@RequestMapping("/todroppedMail.do")

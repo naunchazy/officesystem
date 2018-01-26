@@ -36,7 +36,10 @@
 					<a href="${pageContext.request.contextPath }/mail/toWriteMail.do" target="_self">写邮件</a>
 				</dd>
 				<dd>
-					<a href="${pageContext.request.contextPath }/mail/toReceivedMail.do" target="_self">收邮件</a>
+					<a href="${pageContext.request.contextPath }/mail/toReceivedMail.do" target="_self">收件箱</a>
+				</dd>
+				<dd>
+					<a href="${pageContext.request.contextPath }/mail/toSendedMail.do" target="_self">发件箱</a>
 				</dd>
 				<dd>
 					<a href="${pageContext.request.contextPath }/mail/todroppedMail.do" target="_self">垃圾邮件</a>

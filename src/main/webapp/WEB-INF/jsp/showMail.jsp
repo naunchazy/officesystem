@@ -34,7 +34,7 @@
 			<jsp:include page="left.jsp"></jsp:include>
 			
 			<div class="action">
-				<div class="t">邮件信息详情</div>
+				<div class="t">接收邮件信息详情</div>
 				<div class="pages">
 						<table width="90%" border="0" cellspacing="0" cellpadding="0">
 							<tr style="display:none">

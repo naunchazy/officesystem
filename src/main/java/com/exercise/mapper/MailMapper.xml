@@ -32,6 +32,9 @@
 			</if>
 		</where> -->
 	</select>
+	<select id="listSendMails" parameterType="Mail" resultType="Mail">
+		select * from mail where sendid=#{sendid}
+	</select>
 	<!-- <select id="listDroppedMails" parameterType="int"  resultType="Mail">
 		select * from mail where receiveid=#{receiveid} and isdrop=1
 	</select> -->

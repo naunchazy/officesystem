@@ -9,6 +9,8 @@ public interface IMailService {
 	void saveMail(Mail mail);
 
 	List<Mail> listMails(Mail mail);
+	
+	List<Mail> listSendMails(Mail mail);
 
 	List<Mail> listDroppedMails(Integer id);
 	

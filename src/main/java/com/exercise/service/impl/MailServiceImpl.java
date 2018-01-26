@@ -40,6 +40,17 @@ public class MailServiceImpl implements IMailService{
 	}
 
 	@Override
+	public List<Mail> listSendMails(Mail mail) {
+		List<Mail> listSendMails=null;
+		try {
+			listSendMails=mMapper.listSendMails(mail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listSendMails;
+	}
+
+	@Override
 	public List<Mail> listDroppedMails(Integer id) {
 		List<Mail> listDroppedMails=null;
 		try {

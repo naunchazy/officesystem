@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>邮件信息列表</title>
+<title>接收邮件信息列表</title>
 <link href="${pageContext.request.contextPath}/css/style.css"
 	rel="stylesheet" type="text/css" />
 <script>
@@ -38,7 +38,7 @@
 			<jsp:include page="left.jsp"></jsp:include>
 			
 			<div class="action">
-				<div class="t">邮件信息列表</div>
+				<div class="t">接收邮件信息列表</div>
 				<div class="pages">
 					<table width="90%" border="0" cellspacing="0" cellpadding="0" 
 					style="table-layout: fixed;">
